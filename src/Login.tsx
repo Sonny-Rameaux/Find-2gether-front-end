@@ -11,22 +11,29 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 export default function LoginScreen({ navigation }: Props) {
-  const [text, onChangeText] = useState<string>('');
-  const [Toprint, setToprint] = useState<string>('');
+  const [userName, onChangeName] = useState<string>('');
+  const [password, onChangePW] = useState<string>('');
+
 
   return (
     <SafeAreaView style={styles.container}>
       <TextInput
         style={styles.input}
-        value={text}
-        onChangeText={onChangeText}
+        value={userName}
+        onChangeText={onChangeName}
         placeholder="username"
       />
+      <TextInput
+        style={styles.input}
+        value={password}
+        onChangeText={onChangePW}
+        placeholder="password"
+      />
       <Button title='Increment' onPress={() => {
-          navigation.navigate('Home', { userName: text }); 
+          navigation.navigate('Home', { userName: userName }); 
+          onChangeName('');
         }
       } />
-      <Text>{Toprint}</Text>
     </SafeAreaView>
   );
 }

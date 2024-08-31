@@ -3,11 +3,11 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/Home';
-import DetailsScreen from './screens/DetailsScreen';
+import LoginScreen from './src/Login';
 
 type RootStackParamList = {
-  Home: undefined;
-  Details: { userName: string };
+  Login: undefined;
+  Home: { userName: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -15,16 +15,25 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
-          name="Home"
-          component={HomeScreen}
+          name="Login"
+          component={LoginScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="Details"
-          component={DetailsScreen}
-          options={{ headerShown: false }}
+         <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ 
+            title: "Welcome, <username>",
+            headerStyle: {
+              backgroundColor: '#2196f3', // Couleur de fond différente pour l'écran Home
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
