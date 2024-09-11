@@ -4,8 +4,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/Home';
 import LoginScreen from './src/Login';
+import RegisterScreen from './src/Register';
 
 type RootStackParamList = {
+  Register:undefined;
   Login: undefined;
   Home: { userName: string };
 };
@@ -19,6 +21,11 @@ export default function App() {
         <Stack.Screen
           name="Login"
           component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
           options={{ headerShown: false }}
         />
          <Stack.Screen

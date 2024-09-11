@@ -1,23 +1,21 @@
 // screens/HomeScreen.tsx
 import React, { useState } from 'react';
-import { Button, TextInput, SafeAreaView, StyleSheet, Text} from 'react-native';
+import { Button, TextInput, SafeAreaView, StyleSheet, Text } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type RootStackParamList = {
-  Login: undefined;
   Register: undefined;
+  Login: undefined;
   Home: { userName: string };
 };
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Register'>;
 
-const LoginScreen: React.FC<Props> = ({ navigation }) => {
+const RegisterScreen: React.FC<Props> = ({ navigation }) => {
   const [userName, onChangeName] = useState<string>('');
   const [passWord, onChangePW] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-
-  const postConnectionRequest = async (username: String, password: String) => {
+  const postRegisterRequest = async (username: String, password: String) => {
     try {
       const response = await fetch('http://127.0.0.1:8000/register', {
         method: 'POST',
@@ -36,18 +34,18 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
       }
   
       const data = await response.json();
-      navigation.navigate('Home', { userName: userName });
+      navigation.navigate('Login');
       return data; // You can return this to further use in your app
     } catch (error) {
       setErrorMessage('Error in registration: ' + error);
       // Handle error here, for example by showing an error message to the user
     }
   };
+  
 
   return (
     <SafeAreaView style={styles.container}>
     {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
-
       <TextInput
         style={styles.input}
         value={userName}
@@ -61,10 +59,16 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
         placeholder="password"
       />
       <Button
+        title="register"
+        onPress={() => {
+          postRegisterRequest(userName, passWord);
+          onChangeName('');
+        }}
+      />
+      <Button
         title="connect"
         onPress={() => {
-          postConnectionRequest(userName, passWord);
-          navigation.navigate('Home', { userName: userName });
+          navigation.navigate('Login');
           onChangeName('');
         }}
       />
@@ -92,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default RegisterScreen;
